@@ -1,38 +1,50 @@
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         .card-img {
             width: 290px;
             height: 300px;
             position: relative;
-            
+
             border-top-left-radius: 10px;
-            border-top-right-radius:10px;
+            border-top-right-radius: 10px;
         }
 
-        .card[id]{
+        .card[id] {
             height: 500px;
             margin: 40px;
             border-radius: 10px;
-        }   
-        .card[id] h5{
+        }
+
+        .card[id] h5 {
             position: relative;
             top: -20px;
             left: 5px;
         }
-        .card[id] p{
+
+        .card[id] p {
             position: relative;
             left: 5px;
             top: -20px;
         }
-        .b{
+
+        .b {
             position: relative;
             top: -200px;
             left: 7rem;
             width: 100px;
         }
-        .card[id]{
+
+        .card[id] {
             position: relative;
             left: 100px;
+        }
+
+        @media screen and (min-width: 768px) {
+            .card {
+               width: 220px;
+
+            }
         }
     </style>
 </head>
@@ -44,7 +56,7 @@
         <div class="card-body" style="width: 10rem;">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>   
+                content.</p>
         </div>
     </div>
     <div class="card" id="1" style="width: 18rem;">
@@ -53,10 +65,10 @@
             <h5 class="card-title">Card title</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
                 content.</p>
-            
+
         </div>
     </div>
-    <div class="card"id="1" style="width: 18rem;">
+    <div class="card" id="1" style="width: 18rem;">
         <img src="images/products/3.jpg" class="card-img-top card-img" alt="...">
         <div class="card-body" style="width: 10rem;">
             <h5 class="card-title">Card title</h5>
