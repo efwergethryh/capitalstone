@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 
 app.use(viewsRoutes)
 
-const port =80;
+const port =5000;
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
