@@ -1,5 +1,9 @@
 <header>
     <style>
+        body {
+            background-color: rgb(224, 219, 219);
+        }
+
         .content {
             position: relative;
             top: 50px;
@@ -23,43 +27,40 @@
             font-family: var(--default-font);
         }
 
-        .card-img {
-            width: 290px;
-            height: 300px;
+        .card-img_ {
+            width: 300px;
+            height: 400px;
+            display: flexbox;
             position: relative;
-
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
         }
 
-        .card[id="1"] {
+        .card-img_:hover {}
+
+        .card[id="Allproducts"] {
             position: relative;
 
+            display: inline-block;
             height: 40%;
             margin: 40px;
             border-radius: 10px;
         }
 
-        .card[id="1"] h5 {
+        .card[id="Allproducts"] h5 {
             position: relative;
             top: -20px;
             left: 5px;
         }
 
-        .card[id="1"] p {
+        .card[id="Allproducts"] p {
             position: relative;
             left: 5px;
             top: -20px;
         }
 
-        .b {
-            position: relative;
-            top: -200px;
-            left: 7rem;
-            width: 100px;
-        }
-
-        .card[id="1"] {
+        .card[id="Allproducts"] {
             position: relative;
             left: -24px;
         }
@@ -112,85 +113,145 @@
             font-size: 24px;
             cursor: pointer;
         }
-        .p{
-            display: inline-block;
+
+        p {
+            color: rgb(0, 0, 0);
+            display: block;
+            font-size: 30px;
+            font-weight: bold;
+            position: relative;
+            left: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        @media screen and (max-width=768px) {
+            .card[id="Allproducts"] {
+                position: relative;
+                display: inline-block;
+                height: 40%;
+                margin: 30px;
+                border-radius: 10px;
+                left: 24px;
+            }
+
+            .card[id="Allproducts"] h5 {
+                position: relative;
+                top: -20px;
+                left: 5px;
+            }
+
+            .card[id="Allproducts"] p {
+                position: relative;
+                left: 5px;
+                top: -20px;
+            }
+           
         }
     </style>
 </header>
 
 <body>
-    <div class="p">
-        <div class="card" id="1" style="width: 18rem; ">
-            <img src="images/products/1.jpg" class="card-img-top card-img" alt="...">
-            <!-- <div class="card-body" style="width: 10rem;">
+    <!-- <div class="p"> -->
+    <p>
+        All Products
+    </p>
+    <div class="card" id="Allproducts" style="width: 18rem; ">
+        <img src="images/products/1.jpg" class=".card-img-top card-img_" alt="...">
+        <!-- <div class="card-body" style="width: 10rem;">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
                     content.</p>
             </div> -->
-        </div>
-        <div class="card" id="1" style="width: 18rem;">
-            <img src="images/products/2.jpg" class="card-img-top card-img" alt="...">
-            <!-- <div class="card-body" style="width: 10rem;">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-            </div> -->
-        </div>
-        <div class="card" id="1" style="width: 18rem;">
-            <img src="images/products/3.jpg" class="card-img-top card-img" alt="...">
-            <!-- <div class="card-body" style="width: 10rem;">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-            </div> -->
-        </div>
-        <div class="card" id="1" style="width: 18rem; ">
-            <img src="images/products/4.jpg" class="card-img-top card-img" alt="...">
-            <!-- <div class="card-body" style="width: 10rem;">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-            </div> -->
-        </div>
-        <div class="card" id="1" style="width: 18rem; ">
-            <img src="images/products/5.jpg" class="card-img-top card-img" alt="...">
-            <!-- <div class="card-body" style="width: 10rem;">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-            </div> -->
-        </div>
-        <div class="card" id="1" style="width: 18rem; ">
-            <img src="images/products/h.jpg" class="card-img-top card-img" alt="...">
-            <!-- <div class="card-body" style="width: 10rem;">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-            </div> -->
-        </div>
-        <div class="card" id="1" style="width: 18rem; ">
-            <img src="images/products/hj.jpg" class="card-img-top card-img" alt="...">
-            <!-- <div class="card-body" style="width: 10rem;">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-            </div> -->
-        </div>
-        <div class="card" id="1" style="width: 18rem; ">
-            <img src="images/products/xc.jpg" class="card-img-top card-img" alt="...">
-            <!-- <div class="card-body" style="width: 10rem;">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-            </div> -->
-        </div>
-        <div class="card" id="1" style="width: 18rem; ">
-            <img src="images/products/1.jpg" class="card-img-top card-img" alt="...">
-            <!-- <div class="card-body" style="width: 10rem;">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-            </div> -->
-        </div>
     </div>
+    <div class="card" id="Allproducts" style="width: 18rem;">
+        <img src="images/products/2.jpg" class=".card-img-top card-img_" alt="...">
+        <!-- <div class="card-body" style="width: 10rem;">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+            </div> -->
+    </div>
+    <div class="card" id="Allproducts" style="width: 18rem;">
+        <img src="images/products/3.jpg" class=" card-img_" alt="...">
+        <!-- <div class="card-body" style="width: 10rem;">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+            </div> -->
+    </div>
+    <div class="card" id="Allproducts" style="width: 18rem; ">
+        <img src="images/products/4.jpg" class=" card-img_" alt="...">
+        <!-- <div class="card-body" style="width: 10rem;">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+            </div> -->
+    </div>
+    <div class="card" id="Allproducts" style="width: 18rem; ">
+        <img src="images/products/v.jpg" class=" card-img_" alt="...">
+        <!-- <div class="card-body" style="width: 10rem;">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+            </div> -->
+    </div>
+    <div class="card" id="Allproducts" style="width: 18rem; ">
+        <img src="images/products/h.jpg" class=" card-img_" alt="...">
+        <!-- <div class="card-body" style="width: 10rem;">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+            </div> -->
+    </div>
+    <div class="card" id="Allproducts" style="width: 18rem; ">
+        <img src="images/products/hj.jpg" class=" card-img_" alt="...">
+        <!-- <div class="card-body" style="width: 10rem;">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+            </div> -->
+    </div>
+    <div class="card" id="Allproducts" style="width: 18rem; ">
+        <img src="images/products/xc.jpg" class=" card-img_" alt="...">
+        <!-- <div class="card-body" style="width: 10rem;">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+            </div> -->
+    </div>
+    <div class="card" id="Allproducts" style="width: 18rem; ">
+        <img src="images/products/1.jpg" class=" card-img_" alt="...">
+        <!-- <div class="card-body" style="width: 10rem;">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+            </div> -->
+    </div>
+    <!-- </div> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const popupOverlay = document.getElementById("popup-overlay");
+            const popupImg = document.getElementById("popup-img");
+            const closePopup = document.getElementById("close-popup");
+            const galleryImgs = document.querySelectorAll(".card-img_");
+
+            galleryImgs.forEach(img => {
+                img.addEventListener("click", function () {
+                    popupImg.src = this.src;
+                    console.log(popupImg.src);
+                    popupOverlay.style.display = "block";
+                });
+            });
+
+            closePopup.addEventListener("click", function () {
+                popupOverlay.style.display = "none";
+            });
+
+            popupOverlay.addEventListener("click", function (event) {
+                if (event.target === popupOverlay) {
+                    popupOverlay.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>
