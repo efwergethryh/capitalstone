@@ -44,9 +44,6 @@
             /* Make the word bold if needed */
         }
 
-
-
-
         .hero {
             background-color: #f8f9fa;
             background-image: url('../images/background.jpg');
@@ -123,7 +120,7 @@
             position: relative;
             top: -80px;
             left: 30%;
-            right: 20px;
+            /* right: 20px; */
             /* Adjust right position as needed */
             z-index: 1000;
             /* Ensure the menu appears above other content */
@@ -340,7 +337,7 @@
         .contact-card {
             position: relative;
             left: 140px;
-            display: inline-block;
+            display: flex;
             border: none;
             background-color: #eeebeb7c;
             border-radius: 3px;
@@ -350,6 +347,8 @@
             margin-right: 10px;
             padding-left: 30px;
         }
+
+
 
         .contact-header {
             text-align: center;
@@ -511,15 +510,7 @@
         }
 
         @media screen and (max-width: 768px) {
-            body {
-                margin: 0;
-                /* Remove default margin */
-                padding: 0;
-
-                /* Remove default padding */
-                overflow-x: hidden;
-                /* Prevent horizontal scrolling */
-            }
+            
 
             .hero {
                 background-color: #f8f9fa;
@@ -541,14 +532,13 @@
             }
 
             .nav-menu {
-                position: relative;
+                position: fixed;
                 top: -60px;
-                left: -30%;
+                left: -27%;
                 /* Adjust top position to leave space for the header */
-               /* right: 20px; */
+                right: 20px;
                 /* Adjust right position as needed */
                 z-index: 1000;
-                /* Ensure the menu appears above other content */
             }
 
             .nav-menu ul {
@@ -629,18 +619,16 @@
                 margin-right: 10px;
             }
 
-            tr {
-                display: inline-block;
-                width: 100%;
-            }
-
             .contact-header {
                 text-align: center;
                 margin-bottom: 20px;
             }
 
-            table th {
-                width: 50%;
+
+            th:nth-child(3) .contact-card,
+            th:nth-child(6) .contact-card {
+                display: block;
+
             }
 
             .contact-details {
@@ -810,9 +798,6 @@
                 margin-left: 10px;
             }
 
-            th {
-                width: 100%;
-            }
 
             .gallery {
                 display: flex;
@@ -822,13 +807,15 @@
             }
 
             .gallery img {
+                position: fixed;
                 width: 200px;
                 height: auto;
                 margin: 10px;
                 cursor: pointer;
+                
             }
 
-            .popup-overlay {
+            /* .popup-overlay {
                 display: none;
                 position: fixed;
                 top: 200px;
@@ -850,9 +837,43 @@
                 text-align: center;
             }
 
-            .popup img {
-                max-width: 100%;
-                max-height: 80vh;
+            .close {
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                font-size: 24px;
+                cursor: pointer;
+            } */
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                /* Set position to fixed */
+                top: 50%;
+                /* Adjust as needed */
+                left: 20%;
+                /* Adjust as needed */
+                transform: translate(-50%, -50%);
+                /* Center the popup horizontally and vertically */
+                width: 40%;
+                height: 100%;
+                z-index: 999;
+                overflow: auto;
+                background-color: rgba(0, 0, 0, 0.7);
+                /* Add background color to dim the background */
+                
+            }
+
+            .popup {
+                position: fixed;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 5px;
+                max-width: 80%;
+                text-align: center;
+                overflow: auto;
+                /* Enable scrolling within the popup if content exceeds its size */
+                
             }
 
             .close {
@@ -861,11 +882,25 @@
                 right: 20px;
                 font-size: 24px;
                 cursor: pointer;
+                z-index: 1000;
+                /* Ensure the close button appears above the popup */
             }
+
+
+            .popup img {
+                max-width: 100%;
+                max-height: 80vh;
+                position: fixed;
+                left: 4%;
+                top:30%;
+            }
+
+
 
         }
 
-        @media only screen and (max-device-width: 480px) {
+        @media screen and (max-device-width: 480px) {
+
             /* CSS rules specific to smaller screens */
             header img {
                 width: 100px;
