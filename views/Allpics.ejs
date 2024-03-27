@@ -63,21 +63,22 @@
             left: -24px;
         }
 
-        .gallery {
+        .gallery_ {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
         }
 
-        .gallery img {
+        .gallery_ img {
             width: 200px;
             height: auto;
             margin: 10px;
             cursor: pointer;
         }
 
-        .popup-overlay {
+        .popup_-overlay_ {
             display: none;
             position: fixed;
             top: 0;
@@ -89,7 +90,7 @@
             overflow: auto;
         }
 
-        .popup {
+        .popup_ {
             position: relative;
             margin: 5% auto;
             padding: 20px;
@@ -99,7 +100,7 @@
             text-align: center;
         }
 
-        .popup img {
+        .popup_ img {
             max-width: 100%;
             max-height: 80vh;
         }
@@ -122,32 +123,7 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        @media screen and (max-width=768px) {
-            .card[id="Allproducts"] {
-                position: relative;
-                display: flex;
-                
-                height: 40%;
-                margin: 30px;
-                border-radius: 10px;
-                left:-24px;
-            }
-
-            
-
-            .card[id="Allproducts"] h5 {
-                position: relative;
-                top: -20px;
-                left: 5px;
-            }
-
-            .card[id="Allproducts"] p {
-                position: relative;
-                left: 5px;
-                top: -20px;
-            }
-
-        }
+        
     </style>
 </header>
 
@@ -231,28 +207,32 @@
     <!-- </div> -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const popupOverlay = document.getElementById("popup-overlay");
-            const popupImg = document.getElementById("popup-img");
-            const closePopup = document.getElementById("close-popup");
-            const galleryImgs = document.querySelectorAll(".card-img_");
-
-            galleryImgs.forEach(img => {
+            const popup_Overlay = document.getElementById("popup_-overlay_");
+            const popup_Img = document.getElementById("popup_-img");
+            const closepopup_ = document.getElementById("close-popup_");
+            const gallery_Imgs = document.querySelectorAll(".card-img_");
+            
+            gallery_Imgs.forEach(img => {
+                
                 img.addEventListener("click", function () {
-                    popupImg.src = this.src;
-                    console.log(popupImg.src);
-                    popupOverlay.style.display = "block";
+                    
+                    popup_Img.src = this.src;
+                    console.log(popup_Img.src);
+                    popup_Overlay.style.display = "block";
                 });
             });
 
-            closePopup.addEventListener("click", function () {
-                popupOverlay.style.display = "none";
+            closepopup_.addEventListener("click", function () {
+                popup_Overlay.style.display = "none";
             });
 
-            popupOverlay.addEventListener("click", function (event) {
-                if (event.target === popupOverlay) {
-                    popupOverlay.style.display = "none";
+            popup_Overlay.addEventListener("click", function (event) {
+                if (event.target === popup_Overlay) {
+                    popup_Overlay.style.display = "none";
                 }
             });
         });
     </script>
 </body>
+
+
