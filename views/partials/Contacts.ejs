@@ -15,7 +15,7 @@
 
         <table>
             <tr>
-                <!-- Adress -->
+                <!-- Email -->
                 <th>
                     <div class="contact-card">
                         <div class="contact-header">
@@ -29,8 +29,7 @@
                         </div>
                     </div>
                 </th>
-                <!-- Email -->
-
+                <!-- Opening hours -->
                 <th>
                     <div class="contact-card">
                         <div class="contact-header">
@@ -44,10 +43,11 @@
                         </div>
                     </div>
                 </th>
-                <!-- Opening Hours -->
+
 
 
             </tr>
+            <!-- Addresss -->
             <tr>
                 <th>
                     <div class="contact-card">
@@ -83,36 +83,70 @@
         </table>
         <table>
             <tr>
-                <div class="contact-card cc1 ">
-                    <div class="contact-header">
-                        <i class="bi bi-facebook i"></i>
-                    </div>
-                    <div class="contact-details">
-                        <div class="contact-info">
-                            <h3>Facebook</h3>
-                            <a href="https://web.facebook.com/CapitalStone22">CapitalStone22</a>
-                        </div>
+               <th> <div class="contact-card  ">
+                <div class="contact-header">
+                    <i class="bi bi-facebook i"></i>
+                </div>
+                <div class="contact-details">
+                    <div class="contact-info">
+                        <h3>Facebook</h3>
+                        <a href="https://web.facebook.com/CapitalStone22">CapitalStone22</a>
                     </div>
                 </div>
+            </div></th>
+                <th>
+                    <div class="contact-card ">
+                        <div class="contact-header ">
+                            <i class="bi bi-instagram i"></i>
+                        </div>
+                        <div class="contact-details">
+                            <div class="contact-info">
+                                <h3>Instagram</h3>
+                                <a href="https://www.instagram.com/captalstone/">CapitalStone</a>
+                            </div>
+                        </div>
+    
+                    </div>
+                </th>
             </tr>
             <tr>
-                <div class="contact-card cc2">
-                    <div class="contact-header ">
-                        <i class="bi bi-instagram i"></i>
-                    </div>
-                    <div class="contact-details">
-                        <div class="contact-info">
-                            <h3>Instagram</h3>
-                            <a href="https://www.instagram.com/captalstone/">CapitalStone</a>
-                        </div>
-                    </div>
-
-                </div>
+                
             </tr>
         </table>
 
-        <form action="" id ="sendmessage">
-            
+        <form action="" method="post" class="php-email-form">
+
+
+            <table>
+                <tr>
+                    <th>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Your Name" required>
+                    </th>
+                    <th> 
+                        <input type="email" id="email" class="form-control" name="email" placeholder="Your Email" required>
+                    </th>
+                </tr>
+                
+                <tr>
+                    <th>
+                        <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <button id="send" type="submit">Send Message</button>
+
+                    </th>
+                </tr> 
+
+            </table>
         </form>
     </div>
 
