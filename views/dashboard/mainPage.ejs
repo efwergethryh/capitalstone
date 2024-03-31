@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Form</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            background-color: rgb(240, 237, 237);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20%;
+            height: 100%;
+            overflow-y: auto;
+            padding-top: 50px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 120px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: rgb(195, 194, 196);
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .sidebar a:hover {
+            background-color: rgb(209, 206, 211);
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 999;
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            padding: 30px;
+            width: 200px;
+            border-radius: 5px;
+        }
+
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 10px;
+            font-size: 20px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        textarea,
+        .file-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 10px;
+            background-color: #c4340c;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .file-input-label:hover {
+            background-color: #971907;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #228B22;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1B5E20;
+        }
+
+        .logout {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #c4340c;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .logout:hover {
+            background-color: #b01a05;
+        }
+
+        @media screen and (max-width: 768px) {
+            .sidebar {
+            background-color: rgb(240, 237, 237);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow-y: auto;
+            padding-top: 50px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 999;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="images/logo.png" alt="Logo">
+        </div>
+        <a id="add-button">Add a new product</a>
+        <a id="home">Go to home page</a>
+        <button id="logout" class="logout">Logout</button>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+            <h2>Product Form</h2>
+            <form method="POST" id="productForm">
+                <label for="description">Product Description:</label>
+                <textarea id="description" name="description" required></textarea>
+                <label class="file-input-label" for="picture">Choose Product Image</label>
+                <input class="file-input" type="file" id="picture" name="picture" accept="image/*" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        const openPopupButton = document.getElementById('add-button');
+        const closePopupButton = document.getElementById('closePopup');
+        const popup = document.getElementById('popup');
+        const logout = document.getElementById('logout')
+        const home = document.getElementById('home')
+        home.addEventListener('click', function () {
+            location.assign('/')
+        })
+        logout.addEventListener('click', function (e) {
+            e.preventDefault();
+            fetch('/api/logout', {
+                method: 'get',
+
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    location.assign('/loginOfDashboard')
+                    console.log('Response:', data);
+                    alert(data.message); // Show success message
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error occurred. Please try again.');
+                });
+        })
+        openPopupButton.addEventListener('click', function () {
+            popup.style.display = 'block';
+        });
+
+        closePopupButton.addEventListener('click', function () {
+            popup.style.display = 'none';
+        });
+
+        window.addEventListener('click', function (event) {
+            if (event.target === popup) {
+                popup.style.display = 'none';
+            }
+        });
+
+        // You can add further JavaScript to handle form submission and validation
+        document.getElementById('productForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(); // Create FormData object
+
+            // Append form data to FormData object
+            const description = document.getElementById('description').value;
+            formData.append('description', description);
+            const file = document.getElementById('picture').files[0];
+            formData.append('picture', file);
+
+            // Fetch POST request
+            fetch('/Products/add', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Response:', data);
+                    alert(data.message); // Show success message
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error occurred. Please try again.');
+                });
+        });
+    </script>
+</body>
+
+</html>

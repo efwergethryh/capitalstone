@@ -756,6 +756,12 @@
                 top: 10px;
                 font-size: 10.6px;
             }
+            .contact-info a {
+                margin: 0;
+                position: relative;
+                top: 10px;
+                font-size: 10.6px;
+            }
 
             .i {
                 color: #e84545;
@@ -1107,7 +1113,7 @@
         <div class="_container">
             <h1>Welcome to Capital Stone</h1>
             <p class="lead">شركة عاصمة الرخام للتجارة العامة محدودة المسؤولية </p>
-            <button style="width: 200px;">Get Started</button>
+            <button id="getStarted" style="width: 200px;">Get Started</button>
         </div>
     </section>
     <br>
@@ -1204,9 +1210,13 @@
         }
         var menuItems = document.querySelectorAll('.nav-menu a');
         var active = document.querySelectorAll('.active');
+        var getStarted = document.getElementById('getStarted')
         var header = document.querySelectorAll('header')[0];
         var threshold = 200;
         //Scrolling Css
+        getStarted.addEventListener('click',function(){
+            window.scrollTo(0,1500)
+        })
         window.addEventListener('scroll', function () {
             var scrollPosition = window.scrollY;
             if (scrollPosition > threshold) {

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 //connection to database
-
-const uri = 'mongodb+srv://MostafaSalam:MostafaSalam123456@cluster0.pdm8tap.mongodb.net/capitalStone'
+require('dotenv').config()
+const uri = process.env.MONGO_DB_URI
 
 async function connectDatabase() {
     try {

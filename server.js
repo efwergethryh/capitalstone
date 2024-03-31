@@ -6,9 +6,11 @@ const bodyParser = require('body-parser')
 const { connectDatabase } = require('./Models/connection')
 connectDatabase();
 const viewsRoutes = require('./Routes/viewsRoutes');
+const cookieParser = require('cookie-parser');
 // const path = require('path');
 const app = express();
 app.use(bodyParser.json());
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
