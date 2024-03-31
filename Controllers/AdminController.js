@@ -29,14 +29,16 @@ const login = async (req, res) => {
         if (!admin) {
             return res.status(401).json({ error: 'You are not Authorized!' });
         }
-        const passwordMatch = await bcrypt.compare(password, admin.password);
+        const passwordMatch = await  bcrypt.compare(password, admin.password).then(function(result) {
+            console.log(result);
+        });;
 
         if (!passwordMatch) {    
             return res.status(401).json({ error: 'Wrong credentials' });
         }
 
         const token = createToken(admin._id)
-
+        
         res.cookie(
             "jwt",
             token,
