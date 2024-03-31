@@ -26,33 +26,31 @@ const login = async (req, res) => {
     const { username, password } = req.body;
     try {
         const admin = await Admin.findOne({ username });
-        if (admin === null) {
+        if (!admin) {
             return res.status(401).json({ error: 'You are not Authorized!' });
         }
-        const passwordMatch = await bcrypt.compare(password, admin.password)
+        const passwordMatch = await bcrypt.compare(password, admin.password);
 
-        if (!passwordMatch) {
+        if (!passwordMatch) {    
             return res.status(401).json({ error: 'Wrong credentials' });
         }
 
-        if (passwordMatch) {
-            const token = createToken(admin._id)
+        const token = createToken(admin._id)
 
-            res.cookie(
-                "jwt",
-                token,
-                {
-                    maxAge: 3600000,
-                    httpOnly: true
-                });
+        res.cookie(
+            "jwt",
+            token,
+            {
+                maxAge: 3600000,
+                httpOnly: true
+            });
 
-            res.status(201).json({ message: 'Logged in successfully' });
-        }
+        res.status(201).json({ message: 'Logged in successfully' });
     } catch (error) {
         console.log(error);
     }
-
 }
+
 const loginPage = (req, res) => {
     res.render('login_page')
 }
