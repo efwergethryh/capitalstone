@@ -28,7 +28,7 @@ const login = async (req, res) => {
         if (admin === null) {
             return res.status(401).json({ error: 'You are not Authorized!' });
         }
-        const passwordMatch =  bcrypt.compare(password, admin.password)
+        const passwordMatch = await bcrypt.compare(password, admin.password)
 
         if (!passwordMatch) {
             return res.status(401).json({ error: 'Wrong credentials' });
