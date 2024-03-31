@@ -15,10 +15,10 @@ const add_products = (req, res) => {
 }
 const createToken = (id) => {
 
-    const token = jwt.sign({ userId: id },process.env.SECRET_KEY , { expiresIn: '1h' })
+    const token = jwt.sign({ userId: id }, process.env.SECRET_KEY, { expiresIn: '1h' })
     return token
 }
-const logout = (req,res)=>{
+const logout = (req, res) => {
     res.clearCookie('jwt');
     res.status(200).json({ message: 'Logged out ' })
 }
@@ -30,22 +30,24 @@ const login = async (req, res) => {
             return res.status(401).json({ error: 'You are not Authorized!' });
         }
         const passwordMatch = await bcrypt.compare(password, admin.password)
-    
+
         if (!passwordMatch) {
             return res.status(401).json({ error: 'Wrong credentials' });
         }
 
-        const token = createToken(admin._id)
+        if (passwordMatch) {
+            const token = createToken(admin._id)
 
-        res.cookie(
-            "jwt",
-            token,
-            {
-                maxAge: 3600000,
-                httpOnly: true
-            });
+            res.cookie(
+                "jwt",
+                token,
+                {
+                    maxAge: 3600000,
+                    httpOnly: true
+                });
 
-        res.status(201).json({ message: 'Logged in successfully' });
+            res.status(201).json({ message: 'Logged in successfully' });
+        }
     } catch (error) {
         console.log(error);
     }
@@ -77,5 +79,5 @@ module.exports = {
     add_products,
     loginPage,
     login,
-    register,logout
+    register, logout
 }
