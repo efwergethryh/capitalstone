@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <style>
         body {
             margin: 0;
@@ -56,8 +59,33 @@
         .form-group input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+           /* Style the container */
+    .container {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Style the input field */
+    input[type="password"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    /* Style the show password button */
+    .show-password-btn {
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <h2>Login</h2>
@@ -66,10 +94,17 @@
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+            <label for="password">Password:</label> 
+            <br>    <br>
+            <div class="container">
+                
+                <input type="password" id="password" placeholder="Enter password">
+                <button type="button" class="show-password-btn" onclick="togglePasswordVisibility()">
+
+                    <i class="far fa-eye" style="size: 12px; color:white;"></i> <!-- Font Awesome eye icon -->
+                </button>
             </div>
+            <br>    <br>
             <div id="message" style="color: red;"></div>
             <div class="form-group">
                 <input type="submit" value="Login">
@@ -77,6 +112,15 @@
         </form>
     </div>
     <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+    
         const messageDiv = document.getElementById('message');
         const form = document.querySelector('form');
         form.addEventListener('submit', async (e) => {
@@ -94,29 +138,26 @@
                     }),
                 }).then(res => {
                     if (!res.ok) {
-                        messageDiv.textContent = res.error
+                        return res.json().then(data => Promise.reject(data.error));
                     }
-
                     return res.json();
                 }).then(data => {
-                    // Check if login was successful
-                    console.log(data.success);
                     if (data.message) {
-
                         window.location.href = '/dashboard';
                     } else {
                         messageDiv.textContent = data.error;
                         messageDiv.style.display = 'block';
                     }
-                })
-
-
-            }
-            catch (err) {
+                }).catch(error => {
+                    messageDiv.textContent = error;
+                    messageDiv.style.display = 'block';
+                });
+            } catch (err) {
                 messageDiv.textContent = 'An error occurred. Please try again later.';
             }
-
-        })
+        });
     </script>
+    
 </body>
+
 </html>
