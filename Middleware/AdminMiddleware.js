@@ -1,11 +1,12 @@
 
 const Admin = require('../Models/Admin')
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 const isAuthenticated = (req, res, next) => {
 
     const token = req.cookies.jwt;
     if (token) {
-        jwt.verify(token, 'Admin', (err, user) => {
+        jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
             if (err) {
                 return res.status(403).json({ error: 'Forbidden - Invalid token', token: token });
             }
