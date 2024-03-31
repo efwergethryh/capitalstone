@@ -2,6 +2,7 @@ const Product = require('../Models/Product')
 const Admin = require('../Models/Admin')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 const add_products = (req, res) => {
     const { description } = req.body
 
@@ -14,7 +15,7 @@ const add_products = (req, res) => {
 }
 const createToken = (id) => {
 
-    const token = jwt.sign({ userId: id }, 'Admin', { expiresIn: '1h' })
+    const token = jwt.sign({ userId: id },process.env.SECRET_KEY , { expiresIn: '1h' })
     return token
 }
 const logout = (req,res)=>{
