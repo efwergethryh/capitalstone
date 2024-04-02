@@ -9,7 +9,10 @@ const get_allpics = (req,res)=>{
     });
 }
 const dashboard_page = (req,res)=>{
-    res.render('dashboard/mainPage')
+    Product.find().then((result)=>{
+        console.log(result);
+        res.render('dashboard/mainPage',{products:result}); 
+    });
 }
 module.exports = {
     get_landing_page,get_allpics,dashboard_page

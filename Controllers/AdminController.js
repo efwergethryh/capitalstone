@@ -29,8 +29,9 @@ const login = async (req, res) => {
         if (!admin) {
             return res.status(401).json({ error: 'You are not Authorized!' });
         }
-        const passwordMatch = await  bcrypt.compare(password, admin.password)
-
+        const passwordMatch =  bcrypt.compare(password, admin.password).then(function(result) {
+            console.log(result);
+        });
         if (!passwordMatch) {    
             return res.status(401).json({ error: 'Wrong credentials' });
         }
@@ -63,6 +64,23 @@ async function insertUser(username, password) {
     const admin = new Admin({ username, password: hashedPassword });
     await admin.save();
 }
+const delete_product =async (req,res)=>{
+    try {
+        const id = req.params.id;
+
+        // Find and delete the item by ID
+        const deletedItem = await Product.findByIdAndDelete(id);
+
+        if (!deletedItem) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+
+        res.json(deletedItem);
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
 const register = async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -77,5 +95,6 @@ module.exports = {
     add_products,
     loginPage,
     login,
-    register, logout
+    register, logout,
+    delete_product
 }

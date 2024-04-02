@@ -3,6 +3,7 @@ const multer  = require('multer');
 const pagesController = require('../Controllers/PagesController')
 const AdminController = require('../Controllers/AdminController');
 const { isAuthenticated } = require('../Middleware/AdminMiddleware');
+const Admin = require('../Models/Admin');
 const router = express.Router();
 const storage = multer.diskStorage({
     // Define where to store the uploaded files
@@ -27,6 +28,7 @@ router.get('/loginOfDashboard',AdminController.loginPage);
 router.post('/api/login',AdminController.login);
 router.post('/Products/add',isAuthenticated ,upload.single('picture'),AdminController.add_products)
 router.post('/api/register',AdminController.register)
+router.delete('/api/products/:id',isAuthenticated, AdminController.delete_product);
 router.get('/api/logout',isAuthenticated, AdminController.logout)
 module.exports = router
 
