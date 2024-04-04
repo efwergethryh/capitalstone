@@ -229,7 +229,7 @@
             max-height: 200px;
         }
 
-        
+
 
         .logout:hover {
             background-color: #b01a05;
@@ -306,17 +306,18 @@
                     <span class="close close-update" style="position: relative; top: -50px; left: 115%;"
                         id="closeUpdate">&times;</span>
                     <h2> Update Product </h2>
-                    <form method="POST" id="updateproductForm">
+                    <form method="POST" id="updateproductForm-<%= index %>">
                         <label for="description">Product Description:</label>
-                        <textarea id="description" name=description"
+                        <textarea id="description-<%= index %>" name=description"
                             required><%= products[index].description%></textarea>
                         <img id="selectedImage-<%= index %>" style="width: 50%;"
                             src="images/products/<%= product.path %>">
                         <!-- <label class="file-input-label" for="picture">Choose Product Image</label> -->
                         <input class="file-input" type="file" id="up_picture-<%= index %>" name="picture"
-                            accept="image/*" required onchange="showFileName('<%= index %>')">
-                        <span id="fileName-<%= index %>"></span>
-                        <button type="submit" onclick="update_p('<%= products[index]._id %>','<%=index %>')">Submit</button>
+                            accept="image/*" onchange="showFileName('<%= index %>')">
+
+                        <button type="submit"
+                            onclick="update_p('<%= products[index]._id %>','<%=index %>')">Update</button>
                     </form>
                 </div>
             </div>
@@ -355,22 +356,28 @@
                             const updatePic = document.getElementById('up_picture');
                             const selectedImage = document.getElementById('selectedImage');
                             const up_selectedImage = document.getElementById('up_selectedImage');
+
+
                             function showFileName(index) {
                                 const input = document.getElementById(`up_picture-${index}`);
                                 const fileNameSpan = document.getElementById(`fileName-${index}`);
                                 const selectedImage = document.getElementById(`selectedImage-${index}`);
-                                if (input.files && input.files.length > 0) {
-                                    fileNameSpan.textContent = input.files[0].name;
-                                    const reader = new FileReader();
-                                    reader.onload = function (event) {
-                                        selectedImage.src = event.target.result;
+                                input.addEventListener('change', function (event) {
+
+                                    if (input.files && input.files.length > 0) {
+                                        fileNameSpan.textContent = input.files[0].name;
+                                        const reader = new FileReader();
+                                        reader.onload = function (event) {
+                                            selectedImage.src = event.target.result;
+                                        }
+                                        reader.readAsDataURL(input.files[0]);
+                                    } else {
+                                        fileNameSpan.textContent = '';
+                                        selectedImage.src = ''; // Clear image source if no file selected
                                     }
-                                    reader.readAsDataURL(input.files[0]);
-                                } else {
-                                    fileNameSpan.textContent = '';
-                                    selectedImage.src = ''; // Clear image source if no file selected
-                                }
+                                });
                             }
+
 
 
                             document.addEventListener('DOMContentLoaded', function () {
@@ -414,12 +421,11 @@
                             })
 
                             function update_p(id, index) {
-                                const form = document.getElementById('updateproductForm'); // Replace 'your_form_id' with the actual ID of your form
+                                const form = document.getElementById(`updateproductForm-${index}`); // Replace 'your_form_id' with the actual ID of your form
                                 form.addEventListener('submit', function (event) {
-                                    event.preventDefault(); // Prevent form submission
-
+                                    event.preventDefault(); 
                                     const picture = document.getElementById(`up_picture-${index}`).files[0];
-                                    const description = document.getElementById('description').value;
+                                    const description = document.getElementById(`description-${index}`).value; // Modified to match the textarea ID
                                     const formData = new FormData();
                                     formData.append('description', description);
                                     formData.append('picture', picture);
@@ -440,11 +446,13 @@
                                         })
                                         .catch(error => {
                                             location.reload();
-                                            console.error('Error:', error.message);
-                                            // alert('Error occurred. '+error.message);
+                                            alert('Error:', error.message);
+
                                         });
                                 });
                             }
+
+                            
 
 
                             function delete_P(id) {
