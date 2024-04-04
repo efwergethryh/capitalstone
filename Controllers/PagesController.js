@@ -1,6 +1,10 @@
 const Product = require('../Models/Product')
 const get_landing_page = (req,res)=>{
-    res.render('landingpage');
+
+    Product.find().then((result)=>{
+        console.log(result);
+        res.render('landingpage',{products:result}); 
+    });
 }
 const get_allpics = (req,res)=>{
     Product.find().then((result)=>{

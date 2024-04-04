@@ -456,8 +456,8 @@
 
         .b {
             position: relative;
-            top: -150px;
-            left: 7rem;
+            top: -110px;
+            left: 70rem;
             width: 100px;
         }
 
@@ -615,6 +615,80 @@
             color: #bbb9b9;
         }
 
+        .item-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .item {
+            width: 300px;
+            margin: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .item img {
+            width: 100%;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .item-body {
+            padding: 15px;
+        }
+
+        .item-description {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Popup styles */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            overflow: auto;
+        }
+
+        .popup {
+            position: relative;
+            margin: 5% auto;
+            padding: 20px;
+            background-color: transparent;
+            border-radius: 5px;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        .popup img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 5px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+
         @media screen and (max-width: 768px) {
 
 
@@ -756,6 +830,7 @@
                 top: 10px;
                 font-size: 10.6px;
             }
+
             .contact-info a {
                 margin: 0;
                 position: relative;
@@ -1038,13 +1113,7 @@
                 margin-left: 10%;
             }
 
-            /* input[id="name"],
-        input[id="email"] {
 
-            margin-top: 10%;
-            width: 70%;
-            margin-right: 20%;
-        } */
             input[id="name"] {
                 padding-right: 15%;
                 margin-top: 10%;
@@ -1100,12 +1169,7 @@
 </head>
 
 <body>
-    <div class="popup-overlay" id="popup-overlay">
-        <div class="popup">
-            <img src="" alt="Popup Image" id="popup-img">
-            <span class="close" id="close-popup">&times;</span>
-        </div>
-    </div>
+    
     <section class="hero" id="hero">
         <div class="header">
             <%- include('./partials/header') %>
@@ -1214,8 +1278,8 @@
         var header = document.querySelectorAll('header')[0];
         var threshold = 200;
         //Scrolling Css
-        getStarted.addEventListener('click',function(){
-            window.scrollTo(0,1500)
+        getStarted.addEventListener('click', function () {
+            window.scrollTo(0, 1500)
         })
         window.addEventListener('scroll', function () {
             var scrollPosition = window.scrollY;
@@ -1286,29 +1350,33 @@
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-            const popupOverlay = document.getElementById("popup-overlay");
-            const popupImg = document.getElementById("popup-img");
-            const closePopup = document.getElementById("close-popup");
-            const galleryImgs = document.querySelectorAll(".card-img");
-
-            galleryImgs.forEach(img => {
+            const popup_Overlay = document.getElementById("popup-overlay");
+            const popup_Img = document.getElementById("popup-img");
+            const closepopup_ = document.getElementById("close-popup");
+            const item_Imgs = document.querySelectorAll(".item-img");
+            
+            item_Imgs.forEach(img => {
+                
                 img.addEventListener("click", function () {
-                    popupImg.src = this.src;
-                    console.log(popupImg.src);
-                    popupOverlay.style.display = "block";
+                    
+                    popup_Img.src = this.src;
+                    
+                    popup_Overlay.style.display = "block";
+                    console.log(img.src);
                 });
             });
 
-            closePopup.addEventListener("click", function () {
-                popupOverlay.style.display = "none";
+            closepopup_.addEventListener("click", function () {
+                popup_Overlay.style.display = "none";
             });
 
-            popupOverlay.addEventListener("click", function (event) {
-                if (event.target === popupOverlay) {
-                    popupOverlay.style.display = "none";
+            popup_Overlay.addEventListener("click", function (event) {
+                if (event.target === popup_Overlay) {
+                    popup_Overlay.style.display = "none";
                 }
             });
         });
+
         function view_all() {
             location.assign('/Products')
         }
