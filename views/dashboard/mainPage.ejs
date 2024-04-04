@@ -184,6 +184,8 @@
             color: #333;
         }
 
+
+
         /* Popup styles */
         .popup_-overlay_ {
             display: none;
@@ -285,7 +287,7 @@
     </div>
     <div class="card-container">
         <% if (products && products.length> 0) { %>
-            <% products.forEach(product=> { %>
+            <% products.forEach((product,index)=> { %>
                 <div class="card">
                     <img src="images/products/<%= product.path %>" class="card-img" alt="Product Image">
                     <div class="card-body">
@@ -294,194 +296,288 @@
                         </p>
                     </div>
                     <div class="row">
-                        <i onclick="delete_P('<%= product._id %>')" class="fas fa-trash-alt"
+                        <i onclick="delete_P('<%= product._id %>')" class="fas fa-trash-alt "
                             style="color: #c4340c;"></i>
-                        <i class="fas fa-edit" id="update-popup-b" style="color: rgb(45, 149, 205); margin-left: 20px;"></i>
+                        <i class="fas fa-edit update-popup-b" id="update-popup-b-<%= index %>"
+                            style="color: rgb(45, 149, 205); margin-left: 20px;"></i>
                     </div>
+
                 </div>
-                
-                
                 <% }); %>
                     <% } else { %>
                         <p
                             style="position: relative; left:10% ; top: 300px; font-family:Verdana, Geneva, Tahoma, sans-serif ;">
                             No products found.</p>
                         <% } %>
-                        <!-- <div id="update-popup" class="popup">
+    </div>
+    <% if (products && products.length> 0) { %>
+        <% products.forEach((product,index)=> { %>
+            <div id="update-popup-<%= index %>" class="popup">
+                <div class="popup-content">
+                    <span class="close close-update" style="position: relative; top: -50px; left: 115%;"
+                        id="closeUpdate">&times;</span>
+                    <h2> Update Product </h2>
+                    <form method="POST" id="updateproductForm">
+                        <label for="description">Product Description:</label>
+                        <textarea id="description" name=description"
+                            required><%= products[index].description%></textarea>
+                        <img id="selectedImage-<%= index %>" style="width: 50%;"
+                            src="images/products/<%= product.path %>">
+                        <!-- <label class="file-input-label" for="picture">Choose Product Image</label> -->
+                        <input class="file-input" type="file" id="up_picture-<%= index %>" name="picture"
+                            accept="image/*" required onchange="showFileName('<%= index %>')">
+                        <span id="fileName-<%= index %>"></span>
+                        <button type="submit" onclick="update_p('<%= products[index]._id %>','<%=index %>')">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <% }); %>
+                <% } else { %>
+
+                    <% } %>
+                        <div id="popup" class="popup">
                             <div class="popup-content">
-                                <span class="close" id="closeUpdate">&times;</span>
-                                <h2> Update Product </h2>
+                                <span class="close" id="closePopup"
+                                    style="position: relative; top: -50px; left: 115%;">&times;</span>
+                                <h2>Product Form</h2>
                                 <form method="POST" id="productForm">
                                     <label for="description">Product Description:</label>
                                     <textarea id="description" name="description" required></textarea>
-                                    <img id="selectedImage" src="#" alt="Selected Image">
-                                    <label class="file-input-label" for="picture">Choose Product Image</label>
-                                    <input class="file-input" type="file" id="picture" name="picture" accept="image/*" required>
+                                    <img id="selectedImage" src="#">
+                                    <!-- <label class="file-input-label" for="picture">Choose Product Image</label> -->
+                                    <input class="file-input" type="file" id="picture" onchange="a_showFileName()"
+                                        name="picture" accept="image/*" required>
+
                                     <button type="submit">Submit</button>
                                 </form>
-                            </div> -->
+                            </div>
+                        </div>
+                        <script>
+                            const popup = document.getElementById('popup');
+                            // const openPopupButton = document.getElementById('add-button');
+                            // const closePopupButton = document.getElementById('closePopup');
 
-    </div>
-    <!-- Popup -->
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <span class="close" id="closePopup" style="position: relative; top: -50px; left: 115%;">&times;</span>
-            <h2>Product Form</h2>
-            <form method="POST" id="productForm">
-                <label for="description">Product Description:</label>
-                <textarea id="description" name="description" required></textarea>
-                <img id="selectedImage" src="#" alt="Selected Image">
-                <label class="file-input-label" for="picture">Choose Product Image</label>
-                <input class="file-input" type="file" id="picture" name="picture" accept="image/*" required>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-        
+                            const update_popup = document.getElementById('update-popup');
 
-    </div>
-
-    <script>
-        const popup = document.getElementById('popup');
-        const openPopupButton = document.getElementById('add-button');
-        const closePopupButton = document.getElementById('closePopup');
-
-
-        const update_popup = document.getElementById('update-popup');
-        const updatePopupButton = document.getElementById('update-popup-b');
-        const closeUpdateButton = document.getElementById('closeUpdate');
-        
-        const logout = document.getElementById('logout')
-        const home = document.getElementById('home')
-        const Delete = document.getElementById('delete')
-        const pictureInput = document.getElementById('picture');
-        const selectedImage = document.getElementById('selectedImage');
+                            const logout = document.getElementById('logout')
+                            const home = document.getElementById('home')
+                            const Delete = document.getElementById('delete')
+                            const pictureInput = document.getElementById('picture');
+                            const updatePic = document.getElementById('up_picture');
+                            const selectedImage = document.getElementById('selectedImage');
+                            const up_selectedImage = document.getElementById('up_selectedImage');
+                            function showFileName(index) {
+                                const input = document.getElementById(`up_picture-${index}`);
+                                const fileNameSpan = document.getElementById(`fileName-${index}`);
+                                const selectedImage = document.getElementById(`selectedImage-${index}`);
+                                if (input.files && input.files.length > 0) {
+                                    fileNameSpan.textContent = input.files[0].name;
+                                    const reader = new FileReader();
+                                    reader.onload = function (event) {
+                                        selectedImage.src = event.target.result;
+                                    }
+                                    reader.readAsDataURL(input.files[0]);
+                                } else {
+                                    fileNameSpan.textContent = '';
+                                    selectedImage.src = ''; // Clear image source if no file selected
+                                }
+                            }
 
 
-        pictureInput.addEventListener('change', function () {
-            const file = this.files[0]
-            if (file) {
-                const reader = new FileReader()
-                reader.onload = function (e) {
-                    selectedImage.src = e.target.result;
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const updatePopupButtons = document.querySelectorAll('.update-popup-b');
+                                const closeUpdateButtons = document.querySelectorAll('.close-update');
+                                console.log(updatePopupButtons);
+                                updatePopupButtons.forEach(function (button, index) {
+                                    button.addEventListener('click', function () {
+                                        const updatePopup = document.getElementById('update-popup-' + index);
+                                        console.log(updatePopup);
+                                        updatePopup.style.display = 'block';
+                                    });
+                                });
 
-                }
-                reader.readAsDataURL(file);
-            }
-        })
-        home.addEventListener('click', function () {
-            location.assign('/')
-        })
-        function update_p(id) {
+                                closeUpdateButtons.forEach(function (button, index) {
+                                    button.addEventListener('click', function () {
+                                        const updatePopup = document.getElementById('update-popup-' + index);
+                                        updatePopup.style.display = 'none';
+                                    });
+                                });
 
-        }
-        function delete_P(id) {
-            fetch(`/api/products/${id}`, {
-                method: 'delete',
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
+                                // Other JavaScript code for functionality like adding, deleting products, etc.
+                            });
+                            function a_showFileName() {
+                                const input = document.getElementById('picture');
+                                const fileNameSpan = document.getElementById('selectedImage');
 
-                    console.log('Response:', data);
-                    alert(data.message); // Show success message
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error occurred. Please try again.');
-                });
+                                if (input.files && input.files.length > 0) {
+                                    const reader = new FileReader();
+                                    reader.onload = function (event) {
+                                        fileNameSpan.src = event.target.result;
+                                    }
+                                    reader.readAsDataURL(input.files[0]);
+                                }
+                            }
 
 
-        }
-        logout.addEventListener('click', function (e) {
-            e.preventDefault();
-            fetch('/api/logout', {
-                method: 'get',
 
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    location.assign('/loginOfDashboard')
-                    console.log('Response:', data);
-                    alert(data.message); // Show success message
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error occurred. Please try again.');
-                });
-        })
-        openPopupButton.addEventListener('click', function () {
-            popup.style.display = 'block';
-        });
+                            home.addEventListener('click', function () {
+                                location.assign('/')
+                            })
 
-        closePopupButton.addEventListener('click', function () {
-            popup.style.display = 'none';
-        });
+                            function update_p(id, index) {
+                                const form = document.getElementById('updateproductForm'); // Replace 'your_form_id' with the actual ID of your form
+                                form.addEventListener('submit', function (event) {
+                                    event.preventDefault(); // Prevent form submission
 
-        window.addEventListener('click', function (event) {
-            if (event.target === popup) {
-                popup.style.display = 'none';
-            }
-        });
+                                    const picture = document.getElementById(`up_picture-${index}`).files[0];
+                                    const description = document.getElementById('description').value;
+                                    const formData = new FormData();
+                                    formData.append('description', description);
+                                    formData.append('picture', picture);
 
-        // ///////////////////////////////////////////////////
+                                    fetch(`/api/Products/${id}`, {
+                                        method: 'put',
+                                        body: formData
+                                    })
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error('Network response was not ok');
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(data => {
+                                            console.log('Response:', data);
+                                            alert(data.message); // Show success message
+                                        })
+                                        .catch(error => {
+                                            location.reload();
+                                            console.error('Error:', error.message);
+                                            // alert('Error occurred. '+error.message);
+                                        });
+                                });
+                            }
 
 
-        // updatePopupButton.addEventListener('click', function () {
-        //     update_popup.style.display = 'block';
-        // });
+                            function delete_P(id) {
+                                fetch(`/api/products/${id}`, {
+                                    method: 'delete',
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => {
 
-        // closeUpdateButton.addEventListener('click', function () {
-        //     update_popup.style.display = 'none';
-        // });
+                                        console.log('Response:', data);
+                                        alert(data.message); // Show success message
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                        alert('Error occurred. Please try again.');
+                                    });
 
-        // window.addEventListener('click', function (event) {
-        //     if (event.target === update_popup) {
-        //         update_popup.style.display = 'none';
-        //     }
-        // });
 
-        // You can add further JavaScript to handle form submission and validation
-        document.getElementById('productForm').addEventListener('submit', function (event) {
-            event.preventDefault();// Prevent default form submission
+                            }
+                            logout.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                fetch('/api/logout', {
+                                    method: 'get',
 
-            const formData = new FormData(); // Create FormData object
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => {
+                                        location.assign('/loginOfDashboard')
+                                        console.log('Response:', data);
+                                        alert(data.message); // Show success message
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                        alert('Error occurred. Please try again.');
+                                    });
+                            })
 
-            // Append form data to FormData object
-            const description = document.getElementById('description').value;
-            formData.append('description', description);
-            const file = document.getElementById('picture').files[0];
-            formData.append('picture', file);
+                            // Open Add Product Popup
+                            // openPopupButton.addEventListener('click', function () {
+                            //     popup.style.display = 'block';
+                            // });
 
-            // Fetch POST request
-            fetch('/Products/add', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Response:', data);
-                    alert(data.message); // Show success message
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error occurred. Please try again.');
-                });
-        });
-    </script>
+
+
+                            // closePopupButton.addEventListener('click', function () {
+                            //     popup.style.display = 'none';
+                            // });
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const openPopupButton = document.getElementById('add-button');
+                                const popup = document.getElementById('popup');
+                                const closePopupButton = document.getElementById('closePopup');
+
+                                // Event listener to open the popup
+                                openPopupButton.addEventListener('click', function () {
+                                    popup.style.display = 'block';
+                                });
+
+                                // Event listener to close the popup
+                                closePopupButton.addEventListener('click', function () {
+                                    popup.style.display = 'none';
+                                });
+
+                                // Other JavaScript code for functionality like updating products, deleting products, etc.
+                            });
+
+                            // Open Edit Product Popup
+                            // updatePopupButton.addEventListener('click', function () {
+                            //     update_popup.style.display = 'block';
+                            // });
+
+                            // // Close Edit Product Popup
+                            // closeUpdateButton.addEventListener('click', function () {
+                            //     update_popup.style.display = 'none';
+                            // });
+                            window.addEventListener('click', function (event) {
+                                if (event.target === update_popup) {
+                                    update_popup.style.display = 'none';
+                                }
+                            });
+
+                            document.getElementById('productForm').addEventListener('submit', function (event) {
+                                event.preventDefault();
+                                const formData = new FormData(); // Create FormData object
+                                const description = document.getElementById('description').value;
+                                formData.append('description', description);
+                                const file = document.getElementById('picture').files[0];
+                                formData.append('picture', file);
+
+                                // Fetch POST request
+                                fetch('/Products/add', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => {
+                                        console.log('Response:', data);
+                                        alert(data.message); // Show success message
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                        alert('Error occurred. Please try again.');
+                                    });
+                            });
+
+
+                        </script>
+
 </body>
 
 </html>

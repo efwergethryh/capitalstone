@@ -2,6 +2,7 @@ const Product = require('../Models/Product')
 const Admin = require('../Models/Admin')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const fs = require('fs');
 require('dotenv').config()
 const add_products = (req, res) => {
     const { description } = req.body
@@ -29,15 +30,15 @@ const login = async (req, res) => {
         if (!admin) {
             return res.status(401).json({ error: 'You are not Authorized!' });
         }
-        const passwordMatch =  bcrypt.compare(password, admin.password).then(function(result) {
+        const passwordMatch = bcrypt.compare(password, admin.password).then(function (result) {
             console.log(result);
         });
-        if (!passwordMatch) {    
+        if (!passwordMatch) {
             return res.status(401).json({ error: 'Wrong credentials' });
         }
 
         const token = createToken(admin._id)
-        
+
         res.cookie(
             "jwt",
             token,
@@ -64,17 +65,19 @@ async function insertUser(username, password) {
     const admin = new Admin({ username, password: hashedPassword });
     await admin.save();
 }
-const delete_product =async (req,res)=>{
+const delete_product = async (req, res) => {
     try {
         const id = req.params.id;
 
+        const product = await Product.findById(id);
+        const imagePath = `public/images/products/${product.path}`; // Adjust the path as per your file structure
+        fs.unlinkSync(imagePath);
         // Find and delete the item by ID
         const deletedItem = await Product.findByIdAndDelete(id);
 
         if (!deletedItem) {
             return res.status(404).json({ message: 'Item not found' });
         }
-
         res.json(deletedItem);
     } catch (error) {
         console.error('Error deleting item:', error);
@@ -82,6 +85,7 @@ const delete_product =async (req,res)=>{
     }
 }
 const register = async (req, res) => {
+
     const { username, password } = req.body;
     try {
         await insertUser(username, password);
@@ -91,10 +95,37 @@ const register = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 }
+const update_product = async (req, res)=>{
+    const productId = req.params.id;
+    const { description } = req.body; // Assuming you want to update only the description for now
+    const picture = req.file.filename;
+    try {
+
+        // Find the product by ID
+        const product = await Product.findById(productId);
+
+        if (!product) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        // Update the product's description
+        product.description = description;
+        product.path = picture;
+        // Save the updated product
+        await product.save();
+
+        // Respond with the updated product
+        res.json({ message: 'Product updated successfully', product });
+    } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
 module.exports = {
     add_products,
     loginPage,
     login,
     register, logout,
-    delete_product
+    delete_product,
+    update_product
 }

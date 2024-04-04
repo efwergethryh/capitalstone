@@ -30,6 +30,7 @@ router.post('/Products/add',isAuthenticated ,upload.single('picture'),AdminContr
 router.post('/api/register',AdminController.register)
 router.delete('/api/products/:id',isAuthenticated, AdminController.delete_product);
 router.get('/api/logout',isAuthenticated, AdminController.logout)
+router.put('/api/Products/:id',upload.single('picture'),AdminController.update_product )
 module.exports = router
 
 
