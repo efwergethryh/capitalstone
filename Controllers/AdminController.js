@@ -31,7 +31,7 @@ const login = async (req, res) => {
             return res.status(401).json({ error: 'You are not Authorized!' });
         }
         const passwordMatch = bcrypt.compare(password, admin.password).then(function (result) {
-            console.log(result);
+  
         });
         if (!passwordMatch) {
             return res.status(401).json({ error: 'Wrong credentials' });
@@ -95,12 +95,12 @@ const register = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 }
-const update_product = async (req, res)=>{
+const update_product = async (req, res) => {
+    let picture = '';
     const productId = req.params.id;
-    const { description } = req.body; // Assuming you want to update only the description for now
-    const picture = req.file.filename;
-    try {
+    const { description } = req.body;
 
+    try {
         // Find the product by ID
         const product = await Product.findById(productId);
 
@@ -108,9 +108,17 @@ const update_product = async (req, res)=>{
             return res.status(404).json({ error: 'Product not found' });
         }
 
-        // Update the product's description
+        // Check if a file is uploaded
+        if (req.file) {
+            picture = req.file.filename;
+        }else{
+            picture = product.path
+        }
+
+        // Update the product's description and picture path
         product.description = description;
         product.path = picture;
+
         // Save the updated product
         await product.save();
 
@@ -120,7 +128,8 @@ const update_product = async (req, res)=>{
         console.error('Error updating product:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
-}
+};
+
 module.exports = {
     add_products,
     loginPage,
