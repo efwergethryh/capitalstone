@@ -134,7 +134,7 @@ module.exports = {
     add_products,
     loginPage,
     login,
-    register, logout,
+     logout,
     delete_product,
     update_product
 }
