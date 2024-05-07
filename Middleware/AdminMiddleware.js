@@ -3,7 +3,7 @@ const Admin = require('../Models/Admin')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const isAuthenticated = (req, res, next) => {
-
+    
     const token = req.cookies.jwt;
     if (token) {
         jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
