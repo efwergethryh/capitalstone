@@ -27,7 +27,6 @@ router.get('/dashboard',isAuthenticated,pagesController.dashboard_page);
 router.get('/loginOfDashboard',AdminController.loginPage);
 router.post('/api/login',AdminController.login);
 router.post('/Products/add',isAuthenticated ,upload.single('picture'),AdminController.add_products)
-router.post('/api/register',AdminController.register)
 router.delete('/api/products/:id',isAuthenticated, AdminController.delete_product);
 router.get('/api/logout',isAuthenticated, AdminController.logout)
 router.put('/api/Products/:id',upload.single('picture'),AdminController.update_product )
