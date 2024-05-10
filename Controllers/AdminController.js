@@ -30,9 +30,8 @@ const login = async (req, res) => {
         if (!admin) {
             return res.status(401).json({ error: 'You are not Authorized!' });
         }
-        const passwordMatch = bcrypt.compare(password, admin.password).then(function (result) {
-  
-        });
+        const passwordMatch = await bcrypt.compare(password, admin.password)
+        
         if (!passwordMatch) {
             return res.status(401).json({ error: 'Wrong credentials' });
         }
@@ -84,17 +83,7 @@ const delete_product = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-const register = async (req, res) => {
 
-    const { username, password } = req.body;
-    try {
-        await insertUser(username, password);
-        res.status(201).send('User registered successfully');
-    } catch (error) {
-        console.error('Error registering user:', error);
-        res.status(500).send('Internal Server Error');
-    }
-}
 const update_product = async (req, res) => {
     let picture = '';
     const productId = req.params.id;
@@ -134,7 +123,7 @@ module.exports = {
     add_products,
     loginPage,
     login,
-    register, logout,
+    logout,
     delete_product,
     update_product
 }
