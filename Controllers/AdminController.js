@@ -123,7 +123,7 @@ module.exports = {
     add_products,
     loginPage,
     login,
-    logout,
+     logout,
     delete_product,
     update_product
 }
